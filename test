@@ -1,1 +1,31 @@
+pipeline {
+      agent any
 
+      parameters {
+          quayRepositoryParameter(
+              name: 'REPO_NAME',
+              organization: 'mytag',
+              quayEndpoint: 'http://localhost:8080',
+              credentialsId: 'quay-id',
+              defaultRepository: ''
+          )
+          quayImageParameter(
+              name: 'IMAGE_TAG',
+              organization: 'mytag',
+              repository: 'placeholder',
+              quayEndpoint: 'http://localhost:8080',
+              credentialsId: 'quay-id',
+              tagLimit: 20,
+              defaultTag: 'latest'
+          )
+      }
+
+      stages {
+          stage('Deploy') {
+              steps {
+                  echo "Repo: ${params.REPO_NAME}"
+                  echo "Tag:  ${params.IMAGE_TAG}"
+              }
+          }
+      }
+  }
